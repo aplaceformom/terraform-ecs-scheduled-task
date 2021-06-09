@@ -30,7 +30,7 @@ variable "region" {
   default = "us-east-1"
 }
 
-variable "cpus" {
+variable "cpu" {
   type    = number
   default = 256
 }
