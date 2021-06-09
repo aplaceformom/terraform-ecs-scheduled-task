@@ -1,0 +1,98 @@
+name: Testing
+
+on: [pull_request]
+
+jobs:
+  commit-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - run: npm install
+      - uses: wagoid/commitlint-github-action@v3
+        env:
+          NODE_PATH: ${{ github.workspace }}/node_modules
+
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Set Cache Key
+      run: echo "PY=$(python --version --version | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
+    - uses: actions/cache@v2
+      with:
+        path: ~/.cache/pre-commit
+        key: pre-commit-${{ env.PY }}-${{ hashFiles('.pre-commit-config.yaml') }}
+        restore-keys: pre-commit-${{ env.PY }}-
+    - uses: pre-commit/action@v2.0.3
+
+  terraform-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: hasicorp/setup-terraform@v1
+      with:
+        terraform_version: 0.12.31
+    - name: Set Cache Key
+      run: echo "TF=$(terraform --version | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
+    - uses: actions/cache@v2
+      with:
+        path: .terraform.d
+        key: terraform-${{ env.TF }}-${{ hashFiles('versions.tf') }}
+        restore-keys: terraform-${{ env.TF }}-
+    - id: init
+      run: terraform fmt -init -no-color
+
+    - id: format
+      run: terraform fmt -check -no-color
+
+    - id: validate
+      run: terraform validate -no-color
+
+  terraform-apply:
+    needs: [commit-lint, pre-commit, terraform-check]
+    runs-on: ubuntu-latest
+    services:
+      localstack:
+        image: localstack/localstack
+        ports:
+          - 4566/tcp
+        env:
+          SERVICES: cloudwatch,ecs,iam
+    steps:
+      - name: Configure Terraform for Localstack
+        run: |
+          cat <<EOF>localstack.tf
+          provider "aws" {
+            region                      = "us-west-2"
+            access_key                  = "AKIAIOSFODNN7EXAMPLE"
+            secret_key                  = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+            skip_credentials_validation = true
+            skip_metadata_api_check     = true
+            skip_requesting_account_id  = true
+
+            endpoints {
+              cloudwatch     = "http://localhost:4566"
+              ecs            = "http://localhost:4566"
+              iam            = "http://localhost:4566"
+            }
+          }
+          EOF
+
+    steps:
+    - uses: hasicorp/setup-terraform@v1
+      with:
+        terraform_version: 0.12.31
+
+    - id: init
+      run: terraform init
+
+    - id: apply
+      run: terraform apply -no-color -input=true
