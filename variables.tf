@@ -50,6 +50,12 @@ variable "memory" {
   default = 512
 }
 
+variable "cluster_arn" {
+  description = "Default ECS cluster ARN.  If not defined then cluster named `default' will be used."
+  type        = string
+  default     = ""
+}
+
 variable "subnets" {
   type    = list
   default = []

@@ -1,3 +1,8 @@
+data "aws_caller_identity" "current" {}
+locals {
+  default_cluster_arn = "arn:aws:ecs:${var.region}:${data.aws_caller_identity.current.account_id}:cluster/default"
+}
+
 ## These are defaults from terraform's documentation - they are required for cloudwatch to be able to trigger ecs tasks.
 resource "aws_iam_role" "ecs_events" {
   count              = var.enable ? 1 : 0
@@ -44,7 +49,7 @@ data "aws_iam_policy_document" "ecs_events_run_task" {
 resource "aws_cloudwatch_event_target" "target" {
   count     = var.enable ? 1 : 0
   target_id = var.name
-  arn       = var.cluster["id"]
+  arn       = element(compact([var.cluster_arn, local.default_cluster_arn]), 0)
   rule      = var.cloudwatch_rule
   role_arn  = aws_iam_role.ecs_events[0].arn
 

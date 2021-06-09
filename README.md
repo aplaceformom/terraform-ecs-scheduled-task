@@ -30,6 +30,7 @@ No modules.
 | [aws_ecs_task_definition.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition) | resource |
 | [aws_iam_role.ecs_events](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy.ecs_events](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_iam_policy_document.ecs_events](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.ecs_events_run_task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
@@ -40,6 +41,7 @@ No modules.
 | <a name="input_cloudwatch_log_group"></a> [cloudwatch\_log\_group](#input\_cloudwatch\_log\_group) | CloudWatch Log Group for ECS Scheduled Task. If not defined, name is used instead. | `string` | `""` | no |
 | <a name="input_cloudwatch_rule"></a> [cloudwatch\_rule](#input\_cloudwatch\_rule) | Cron or scheduled rule to use for the scheduled task | `string` | n/a | yes |
 | <a name="input_cluster"></a> [cluster](#input\_cluster) | n/a | `map` | n/a | yes |
+| <a name="input_cluster_arn"></a> [cluster\_arn](#input\_cluster\_arn) | Default ECS cluster ARN.  If not defined then cluster named `default' will be used.` | `string` | `""` | no |
 | <a name="input_container_definitions"></a> [container\_definitions](#input\_container\_definitions) | n/a | `any` | n/a | yes |
 | <a name="input_cpus"></a> [cpus](#input\_cpus) | n/a | `number` | `256` | no |
 | <a name="input_enable"></a> [enable](#input\_enable) | n/a | `bool` | `false` | no |
