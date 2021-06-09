@@ -56,6 +56,3 @@ variable "container_definitions" {}
 variable "name" {
   description = "Name value to use for task related objects"
 }
-locals {
-  exec_role_arn        = element(compact([var.exec_role_arn, var.cluster["execution_role_arn"]]), 0)
-}
