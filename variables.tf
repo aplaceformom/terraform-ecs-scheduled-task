@@ -3,10 +3,6 @@ variable "enable" {
   default = false
 }
 
-variable "cluster" {
-  type = map
-}
-
 variable "vpc_id" {
   type    = string
   default = ""
