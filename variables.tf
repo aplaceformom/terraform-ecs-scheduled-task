@@ -23,7 +23,6 @@ variable "cloudwatch_rule" {
 variable "cloudwatch_log_group" {
   description = "CloudWatch Log Group for ECS Scheduled Task. If not defined, name is used instead."
   type        = string
-  default     = ""
 }
 
 variable "region" {
@@ -57,9 +56,7 @@ variable "container_definitions" {}
 variable "name" {
   description = "Name value to use for task related objects"
 }
-
 locals {
   region               = element(compact([var.region, var.cluster["region"]]), 0)
   exec_role_arn        = element(compact([var.exec_role_arn, var.cluster["execution_role_arn"]]), 0)
-  cloudwatch_log_group = element(compact([var.cloudwatch_log_group, var.name]), 0)
 }
