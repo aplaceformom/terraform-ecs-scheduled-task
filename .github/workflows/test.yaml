@@ -155,3 +155,12 @@ jobs:
         TF_VAR_cloudwatch_log_group: localstack-logs
         TF_VAR_cloudwatch_rule: '0 7 * * ? *'
       run: terraform apply -no-color -input=false
+
+    - id: destroy
+      env:
+        TF_VAR_image: scratch
+        TF_VAR_name: localstack-test
+        TF_VAR_cloudwatch_log_group: localstack-logs
+        TF_VAR_cloudwatch_rule: '0 7 * * ? *'
+        TF_VAR_enable: false
+      run: terraform apply -no-color -input=false
