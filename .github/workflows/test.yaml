@@ -112,7 +112,7 @@ jobs:
       localstack:
         image: localstack/localstack
         ports:
-          - 4566/tcp
+          - 4566:4566
         env:
           SERVICES: cloudwatch,ecs,iam,sts
     steps:
