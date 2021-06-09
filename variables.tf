@@ -68,5 +68,4 @@ locals {
   region               = element(compact([var.region, var.cluster["region"]]), 0)
   exec_role_arn        = element(compact([var.exec_role_arn, var.cluster["execution_role_arn"]]), 0)
   cloudwatch_log_group = element(compact([var.cloudwatch_log_group, var.name]), 0)
-  subnets              = split(",", length(var.subnets) == 0 ? var.cluster["private_subnets"] : join(",", var.subnets))
 }
