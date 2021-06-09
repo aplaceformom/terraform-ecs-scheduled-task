@@ -154,7 +154,7 @@ jobs:
     - name: Terraform Apply
       id: apply
       env:
-        TF_LOG: debug
+        TF_LOG: info
         TF_VAR_image: scratch
         TF_VAR_name: localstack-test
         TF_VAR_cloudwatch_log_group: localstack-logs
@@ -164,7 +164,7 @@ jobs:
     - name: Terraform Apply (enable=false)
       id: destroy
       env:
-        TF_LOG: debug
+        TF_LOG: info
         TF_VAR_image: scratch
         TF_VAR_name: localstack-test
         TF_VAR_cloudwatch_log_group: localstack-logs
