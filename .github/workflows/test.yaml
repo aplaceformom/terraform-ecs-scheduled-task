@@ -114,7 +114,7 @@ jobs:
         ports:
           - 4566:4566
         env:
-          SERVICES: cloudwatch,ec2,ecs,iam,sts
+          SERVICES: cloudwatch,ec2,ecs,iam,sts,events
     steps:
     - uses: actions/checkout@v2
     - name: Configure Terraform for Localstack
@@ -129,11 +129,12 @@ jobs:
           skip_requesting_account_id  = true
 
           endpoints {
-            cloudwatch     = "http://localhost:4566"
-            ec2            = "http://localhost:4566"
-            ecs            = "http://localhost:4566"
-            iam            = "http://localhost:4566"
-            sts            = "http://localhost:4566"
+            cloudwatch       = "http://localhost:4566"
+            cloudwatchevents = "http://localhost:4566"
+            ec2              = "http://localhost:4566"
+            ecs              = "http://localhost:4566"
+            iam              = "http://localhost:4566"
+            sts              = "http://localhost:4566"
           }
         }
         EOF
