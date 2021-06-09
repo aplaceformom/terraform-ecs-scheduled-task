@@ -64,6 +64,18 @@ resource "aws_cloudwatch_event_target" "target" {
   }
 }
 
+locals {
+  container_definition = {
+    name        = var.name
+    image       = var.image
+    command     = var.command
+    environment = var.environment
+    secrets     = var.secrets
+    essential   = true
+    cpu         = var.cpu
+    memory      = var.memory
+  }
+}
 resource "aws_ecs_task_definition" "task" {
   count                    = var.enable ? 1 : 0
   family                   = var.name
@@ -73,5 +85,5 @@ resource "aws_ecs_task_definition" "task" {
   network_mode             = "awsvpc"
   cpu                      = var.cpus
   memory                   = var.memory
-  container_definitions    = var.container_definitions
+  container_definitions    = jsonencode([local.container_definition])
 }
