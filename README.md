@@ -48,7 +48,7 @@ No modules.
 | <a name="input_exec_role_arn"></a> [exec\_role\_arn](#input\_exec\_role\_arn) | Role to pull the container and push logs to CW. This is required for the FARGATE launch type, optional for EC2 | `string` | `""` | no |
 | <a name="input_image"></a> [image](#input\_image) | Container image to pull | `string` | n/a | yes |
 | <a name="input_memory"></a> [memory](#input\_memory) | Fargate Memory size allication | `number` | `512` | no |
-| <a name="input_name"></a> [name](#input\_name) | Name value to use for task related objects | `any` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | Name value to use for task related objects | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | n/a | `string` | `"us-east-1"` | no |
 | <a name="input_secrets"></a> [secrets](#input\_secrets) | Environment variables to set from the secrets store at launch. | `map` | `{}` | no |
 | <a name="input_subnets"></a> [subnets](#input\_subnets) | n/a | `list` | `[]` | no |
