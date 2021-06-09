@@ -30,14 +30,21 @@ variable "region" {
   default = "us-east-1"
 }
 
+variable "image" {
+  description = "Container image to pull"
+  type        = string
+}
+
 variable "cpu" {
-  type    = number
-  default = 256
+  description = "Fargate CPU time allocation"
+  type        = number
+  default     = 256
 }
 
 variable "memory" {
-  type    = number
-  default = 512
+  description = "Fargate Memory size allication"
+  type        = number
+  default     = 512
 }
 
 variable "command" {
