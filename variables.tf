@@ -40,6 +40,12 @@ variable "memory" {
   default = 512
 }
 
+variable "command" {
+  description = "Override default container command."
+  type        = string
+  default     = ""
+}
+
 variable "cluster_arn" {
   description = "Default ECS cluster ARN.  If not defined then cluster named `default' will be used."
   type        = string
@@ -49,6 +55,18 @@ variable "cluster_arn" {
 variable "subnets" {
   type    = list
   default = []
+}
+
+variable "environment" {
+  description = "Environment variables to pass to container at launch."
+  type        = map
+  default     = {}
+}
+
+variable "secrets" {
+  description = "Environment variables to set from the secrets store at launch."
+  type        = map
+  default     = {}
 }
 
 variable "name" {
