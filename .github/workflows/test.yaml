@@ -8,6 +8,8 @@ env:
   TFDOCS_VERSION: v0.14.1
   TFLINT_VERSION: 0.29.0
   TF_VAR_region: us-east-1
+  AWS_ACCESS_KEY_ID: test
+  AWS_SECRET_ACCESS_KEY: test
 
 jobs:
   commit-lint:
@@ -120,8 +122,8 @@ jobs:
         cat <<EOF>providers.tf
         provider "aws" {
           region                      = var.region
-          access_key                  = "AKIAIOSFODNN7EXAMPLE"
-          secret_key                  = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+          access_key                  = "${{ env.AWS_ACCESS_KEY_ID }}"
+          secret_key                  = "${{ env.AWS_SECRET_ACCESS_KEY }}"
           skip_credentials_validation = true
           skip_metadata_api_check     = true
           skip_requesting_account_id  = true
