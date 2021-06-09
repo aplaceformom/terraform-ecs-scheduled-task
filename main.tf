@@ -83,7 +83,7 @@ resource "aws_ecs_task_definition" "task" {
   task_role_arn            = var.task_role_arn
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
-  cpu                      = var.cpus
+  cpu                      = var.cpu
   memory                   = var.memory
   container_definitions    = jsonencode([local.container_definition])
 }
