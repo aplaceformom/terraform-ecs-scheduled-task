@@ -1,6 +1,6 @@
 variable "enable" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "exec_role_arn" {
