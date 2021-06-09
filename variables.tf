@@ -3,11 +3,6 @@ variable "enable" {
   default = false
 }
 
-variable "vpc_id" {
-  type    = string
-  default = ""
-}
-
 variable "exec_role_arn" {
   description = "Role to pull the container and push logs to CW. This is required for the FARGATE launch type, optional for EC2"
   type        = string
@@ -64,7 +59,6 @@ variable "name" {
 }
 
 locals {
-  vpc_id               = element(compact([var.vpc_id, var.cluster["vpc_id"]]), 0)
   region               = element(compact([var.region, var.cluster["region"]]), 0)
   exec_role_arn        = element(compact([var.exec_role_arn, var.cluster["execution_role_arn"]]), 0)
   cloudwatch_log_group = element(compact([var.cloudwatch_log_group, var.name]), 0)
