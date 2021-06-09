@@ -51,8 +51,6 @@ variable "subnets" {
   default = []
 }
 
-variable "container_definitions" {}
-
 variable "name" {
   description = "Name value to use for task related objects"
 }
