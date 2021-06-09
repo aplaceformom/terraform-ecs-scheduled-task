@@ -114,6 +114,7 @@ jobs:
         ports:
           - 4566:4566
         env:
+          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
           SERVICES: cloudwatch,ec2,ecs,iam,sts,events
     steps:
     - uses: actions/checkout@v2
