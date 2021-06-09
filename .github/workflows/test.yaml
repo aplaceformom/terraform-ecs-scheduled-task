@@ -117,6 +117,10 @@ jobs:
           LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
           SERVICES: cloudwatch,ec2,ecs,iam,sts,events
     steps:
+    - name: Waiting for Localstack
+      timeout-minutes: 10
+      run: while ! curl --fail -s -k https://localhost:4566/health; do sleep 5 ; done
+
     - uses: actions/checkout@v2
     - name: Configure Terraform for Localstack
       run: |
