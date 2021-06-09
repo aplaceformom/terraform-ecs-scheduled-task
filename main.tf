@@ -1,3 +1,4 @@
+data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 locals {
   default_cluster_arn = "arn:aws:ecs:${var.region}:${data.aws_caller_identity.current.account_id}:cluster/default"
@@ -65,16 +66,20 @@ resource "aws_cloudwatch_event_target" "target" {
 }
 
 locals {
-  container_definition = {
-    name        = var.name
-    image       = var.image
-    command     = var.command
-    environment = var.environment
-    secrets     = var.secrets
-    essential   = true
-    cpu         = var.cpu
-    memory      = var.memory
-  }
+  region = length(var.region) > 0 ? var.region : data.aws_region.current.name
+  environ = [
+    for key in sort(keys(var.environment)) : {
+      name  = key
+      value = var.environment[key]
+    }
+  ]
+
+  secrets = [
+    for key in sort(keys(var.secrets)) : {
+      name      = key
+      valueFrom = substr(var.secrets[key], 0, 8) == "arn:aws:" ? var.secrets[key] : substr(var.secrets[key], 0, 4) == "key/" ? "arn:aws:kms:${local.region}:${data.aws_caller_identity.current.account_id}:${var.secrets[key]}" : substr(var.secrets[key], 0, 1) == "/" ? "arn:aws:ssm:${local.region}:${data.aws_caller_identity.current.account_id}:parameter/${replace(var.secrets[key], "/^[/]/", "")}" : "arn:aws:secretsmanager:${local.region}:${data.aws_caller_identity.current.account_id}:secret:${var.secrets[key]}"
+    }
+  ]
 }
 resource "aws_ecs_task_definition" "task" {
   count                    = var.enable ? 1 : 0
@@ -85,5 +90,12 @@ resource "aws_ecs_task_definition" "task" {
   network_mode             = "awsvpc"
   cpu                      = var.cpu
   memory                   = var.memory
-  container_definitions    = jsonencode([local.container_definition])
+  container_definitions = jsonencode([{
+    name        = var.name
+    image       = var.image
+    essential   = true
+    command     = split(" ", var.command)
+    environment = local.environ
+    secrets     = local.secrets
+  }])
 }
