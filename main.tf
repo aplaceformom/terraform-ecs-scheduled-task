@@ -59,7 +59,7 @@ resource "aws_cloudwatch_event_target" "target" {
     launch_type         = "FARGATE"
 
     network_configuration {
-      subnets = local.subnets
+      subnets = var.subnets
     }
   }
 }
