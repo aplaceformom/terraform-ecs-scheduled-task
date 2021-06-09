@@ -78,4 +78,5 @@ variable "secrets" {
 
 variable "name" {
   description = "Name value to use for task related objects"
+  type        = string
 }
