@@ -47,7 +47,7 @@ No modules.
 | <a name="input_exec_role_arn"></a> [exec\_role\_arn](#input\_exec\_role\_arn) | Role to pull the container and push logs to CW. This is required for the FARGATE launch type, optional for EC2 | `string` | `""` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | n/a | `number` | `512` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name value to use for task related objects | `any` | n/a | yes |
-| <a name="input_region"></a> [region](#input\_region) | n/a | `string` | `"us-west-2"` | no |
+| <a name="input_region"></a> [region](#input\_region) | n/a | `string` | `"us-east-1"` | no |
 | <a name="input_subnets"></a> [subnets](#input\_subnets) | n/a | `list` | `[]` | no |
 | <a name="input_task_role_arn"></a> [task\_role\_arn](#input\_task\_role\_arn) | Role that provides the security context that the container actually runs in. | `string` | `""` | no |
 

@@ -27,7 +27,7 @@ variable "cloudwatch_log_group" {
 
 variable "region" {
   type    = string
-  default = "us-west-2"
+  default = "us-east-1"
 }
 
 variable "cpus" {
@@ -57,6 +57,5 @@ variable "name" {
   description = "Name value to use for task related objects"
 }
 locals {
-  region               = element(compact([var.region, var.cluster["region"]]), 0)
   exec_role_arn        = element(compact([var.exec_role_arn, var.cluster["execution_role_arn"]]), 0)
 }
