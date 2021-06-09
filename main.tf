@@ -67,7 +67,7 @@ resource "aws_cloudwatch_event_target" "target" {
 resource "aws_ecs_task_definition" "task" {
   count                    = var.enable ? 1 : 0
   family                   = var.name
-  execution_role_arn       = local.exec_role_arn
+  execution_role_arn       = var.exec_role_arn
   task_role_arn            = var.task_role_arn
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
