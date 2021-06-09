@@ -41,7 +41,6 @@ No modules.
 | <a name="input_cloudwatch_log_group"></a> [cloudwatch\_log\_group](#input\_cloudwatch\_log\_group) | CloudWatch Log Group for ECS Scheduled Task. If not defined, name is used instead. | `string` | n/a | yes |
 | <a name="input_cloudwatch_rule"></a> [cloudwatch\_rule](#input\_cloudwatch\_rule) | Cron or scheduled rule to use for the scheduled task | `string` | n/a | yes |
 | <a name="input_cluster_arn"></a> [cluster\_arn](#input\_cluster\_arn) | Default ECS cluster ARN.  If not defined then cluster named `default' will be used.` | `string` | `""` | no |
-| <a name="input_container_definitions"></a> [container\_definitions](#input\_container\_definitions) | n/a | `any` | n/a | yes |
 | <a name="input_cpus"></a> [cpus](#input\_cpus) | n/a | `number` | `256` | no |
 | <a name="input_enable"></a> [enable](#input\_enable) | n/a | `bool` | `false` | no |
 | <a name="input_exec_role_arn"></a> [exec\_role\_arn](#input\_exec\_role\_arn) | Role to pull the container and push logs to CW. This is required for the FARGATE launch type, optional for EC2 | `string` | `""` | no |
