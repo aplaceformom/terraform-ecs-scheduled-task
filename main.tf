@@ -7,7 +7,7 @@ locals {
 ## These are defaults from terraform's documentation - they are required for cloudwatch to be able to trigger ecs tasks.
 resource "aws_iam_role" "ecs_events" {
   count              = var.enable ? 1 : 0
-  name               = "ecs_schedule_${var.name}"
+  name               = "ecs_scheduled_event_${var.name}"
   assume_role_policy = data.aws_iam_policy_document.ecs_events.json
 }
 
@@ -69,6 +69,28 @@ resource "aws_cloudwatch_event_target" "target" {
       subnets = var.subnets
     }
   }
+}
+
+resource "aws_iam_role" "ecs_task" {
+  count              = var.enable ? 1 : 0
+  name               = "ecs_scheduled_task_${var.name}"
+  assume_role_policy = data.aws_iam_policy_document.ecs_task.json
+}
+
+data "aws_iam_policy_document" "ecs_task" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["ecs.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task" {
+  count      = var.enable ? 1 : 0
+  role       = aws_iam_role.ecs_task[0].name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 locals {
