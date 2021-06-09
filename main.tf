@@ -47,11 +47,17 @@ data "aws_iam_policy_document" "ecs_events_run_task" {
   }
 }
 
+resource "aws_cloudwatch_event_rule" "cronjob" {
+  count               = var.enable ? 1 : 0
+  name                = var.name
+  schedule_expression = "cron(${var.cloudwatch_rule})"
+}
+
 resource "aws_cloudwatch_event_target" "target" {
   count     = var.enable ? 1 : 0
   target_id = var.name
   arn       = element(compact([var.cluster_arn, local.default_cluster_arn]), 0)
-  rule      = var.cloudwatch_rule
+  rule      = aws_cloudwatch_event_rule.cronjob[0].name
   role_arn  = aws_iam_role.ecs_events[0].arn
 
   ecs_target {
