@@ -42,7 +42,7 @@ data "aws_iam_policy_document" "ecs_events_run_task" {
 
   statement {
     actions   = ["ecs:RunTask"]
-    resources = [replace(aws_ecs_task_definition.task[0].arn, "/:\\d+$/", ":*")]
+    resources = [var.enable ? replace(aws_ecs_task_definition.task[0].arn, "/:\\d+$/", ":*") : ""]
   }
 }
 
