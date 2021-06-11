@@ -44,7 +44,6 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_cloudwatch_log_group"></a> [cloudwatch\_log\_group](#input\_cloudwatch\_log\_group) | CloudWatch Log Group for ECS Scheduled Task. If not defined, name is used instead. | `string` | n/a | yes |
-| <a name="input_cloudwatch_rule"></a> [cloudwatch\_rule](#input\_cloudwatch\_rule) | Cron or scheduled rule to use for the scheduled task | `string` | n/a | yes |
 | <a name="input_cluster_arn"></a> [cluster\_arn](#input\_cluster\_arn) | Default ECS cluster ARN.  If not defined then cluster named `default' will be used.` | `string` | `""` | no |
 | <a name="input_command"></a> [command](#input\_command) | Override default container command. | `string` | `""` | no |
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | Fargate CPU time allocation | `number` | `256` | no |
@@ -55,6 +54,7 @@ No modules.
 | <a name="input_memory"></a> [memory](#input\_memory) | Fargate Memory size allication | `number` | `512` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name value to use for task related objects | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | n/a | `string` | `"us-east-1"` | no |
+| <a name="input_schedule"></a> [schedule](#input\_schedule) | Cron or scheduled rule to use for the scheduled task | `string` | n/a | yes |
 | <a name="input_secrets"></a> [secrets](#input\_secrets) | Environment variables to set from the secrets store at launch. | `map` | `{}` | no |
 | <a name="input_subnets"></a> [subnets](#input\_subnets) | n/a | `list` | `[]` | no |
 | <a name="input_task_role_arn"></a> [task\_role\_arn](#input\_task\_role\_arn) | Role that provides the security context that the container actually runs in. | `string` | `""` | no |

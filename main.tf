@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "ecs_events_run_task" {
 resource "aws_cloudwatch_event_rule" "cronjob" {
   count               = var.enable ? 1 : 0
   name                = var.name
-  schedule_expression = "cron(${var.cloudwatch_rule})"
+  schedule_expression = "cron(${var.schedule})"
 }
 
 resource "aws_cloudwatch_event_target" "target" {
