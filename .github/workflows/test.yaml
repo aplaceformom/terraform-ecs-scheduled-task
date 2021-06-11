@@ -178,7 +178,7 @@ jobs:
         TF_VAR_image: scratch
         TF_VAR_name: localstack-test
         TF_VAR_cloudwatch_log_group: localstack-logs
-        TF_VAR_cloudwatch_rule: '0 7 * * ? *'
+        TF_VAR_schedule: '0 7 * * ? *'
         TF_VAR_command: "echo hello world"
         TF_VAR_environment: '{ environment = "test" }'
         TF_VAR_secrets: '{ password = "abc123" }'
@@ -191,6 +191,6 @@ jobs:
         TF_VAR_image: scratch
         TF_VAR_name: localstack-test
         TF_VAR_cloudwatch_log_group: localstack-logs
-        TF_VAR_cloudwatch_rule: '0 7 * * ? *'
+        TF_VAR_schedule: '0 7 * * ? *'
         TF_VAR_enable: false
       run: terraform apply -no-color -input=false -auto-approve

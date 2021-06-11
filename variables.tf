@@ -15,7 +15,7 @@ variable "task_role_arn" {
   default     = ""
 }
 
-variable "cloudwatch_rule" {
+variable "schedule" {
   description = "Cron or scheduled rule to use for the scheduled task"
   type        = string
 }
