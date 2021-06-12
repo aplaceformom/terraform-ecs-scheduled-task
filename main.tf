@@ -7,7 +7,7 @@ locals {
 ## These are defaults from terraform's documentation - they are required for cloudwatch to be able to trigger ecs tasks.
 resource "aws_iam_role" "ecs_events" {
   count              = var.enable ? 1 : 0
-  name               = "ecs_scheduled_event_${var.name}"
+  name               = "EcsSchedEvent-${var.name}"
   assume_role_policy = data.aws_iam_policy_document.ecs_events.json
 }
 
@@ -73,7 +73,7 @@ resource "aws_cloudwatch_event_target" "target" {
 
 resource "aws_iam_role" "ecs_task" {
   count              = var.enable ? 1 : 0
-  name               = "ecs_scheduled_task_${var.name}"
+  name               = "EcsSchedTask-${var.name}"
   assume_role_policy = data.aws_iam_policy_document.ecs_task.json
 }
 
