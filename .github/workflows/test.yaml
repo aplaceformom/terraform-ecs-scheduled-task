@@ -33,6 +33,7 @@ jobs:
       run: |
         echo "::set-output name=home::${HOME}"
         mkdir -p "${HOME}/.local/bin"
+        printf 'provider "aws" { region = var.region }\n' > _aws_provider.tf
 
     - uses: actions/checkout@v2
 
@@ -98,6 +99,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - run: printf 'provider "aws" { region = var.region }\n' > _aws_provider.tf
+
     - uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: ${{ env.TF_VERSION }}
@@ -140,7 +143,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Configure Terraform for Localstack
       run: |
-        cat <<EOF>providers.tf
+        cat <<EOF>_aws_provider.tf
         provider "aws" {
           region                      = var.region
           access_key                  = "${{ env.AWS_ACCESS_KEY_ID }}"
