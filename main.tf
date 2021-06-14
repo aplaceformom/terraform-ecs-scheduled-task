@@ -72,7 +72,7 @@ resource "aws_cloudwatch_event_target" "target" {
 }
 
 resource "aws_iam_role" "ecs_task" {
-  count              = var.enable ? 1 : 0
+  count              = var.enable && var.exec_role_arn == "" ? 1 : 0
   name               = "EcsSchedTask-${var.name}"
   assume_role_policy = data.aws_iam_policy_document.ecs_task.json
 }
@@ -88,12 +88,14 @@ data "aws_iam_policy_document" "ecs_task" {
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task" {
-  count      = var.enable ? 1 : 0
+  count      = var.enable && var.exec_role_arn == "" ? 1 : 0
   role       = aws_iam_role.ecs_task[0].name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 locals {
+  exec_role = var.exec_role_arn != "" ? var.exec_role_arn : var.enable ? aws_iam_role.ecs_task[0].arn : ""
+
   region = length(var.region) > 0 ? var.region : data.aws_region.current.name
   environ = [
     for key in sort(keys(var.environment)) : {
