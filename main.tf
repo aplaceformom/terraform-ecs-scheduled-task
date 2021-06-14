@@ -95,6 +95,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task" {
 
 locals {
   exec_role_arn = var.exec_role_arn != "" ? var.exec_role_arn : var.enable ? aws_iam_role.ecs_task[0].arn : ""
+  log_group     = var.log_group != "" ? var.log_group : "ecs/app/${var.name}"
 
   region = length(var.region) > 0 ? var.region : data.aws_region.current.name
   environ = [
@@ -127,5 +128,13 @@ resource "aws_ecs_task_definition" "task" {
     command     = split(" ", var.command)
     environment = local.environ
     secrets     = local.secrets
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-create = "true"
+        awslogs-region = local.region
+        awslogs-group  = var.name
+      }
+    }
   }])
 }
