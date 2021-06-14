@@ -94,7 +94,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task" {
 }
 
 locals {
-  exec_role = var.exec_role_arn != "" ? var.exec_role_arn : var.enable ? aws_iam_role.ecs_task[0].arn : ""
+  exec_role_arn = var.exec_role_arn != "" ? var.exec_role_arn : var.enable ? aws_iam_role.ecs_task[0].arn : ""
 
   region = length(var.region) > 0 ? var.region : data.aws_region.current.name
   environ = [
@@ -114,7 +114,7 @@ locals {
 resource "aws_ecs_task_definition" "task" {
   count                    = var.enable ? 1 : 0
   family                   = var.name
-  execution_role_arn       = var.exec_role_arn
+  execution_role_arn       = local.exec_role_arn
   task_role_arn            = var.task_role_arn
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
