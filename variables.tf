@@ -20,9 +20,10 @@ variable "schedule" {
   type        = string
 }
 
-variable "cloudwatch_log_group" {
-  description = "CloudWatch Log Group for ECS Scheduled Task. If not defined, name is used instead."
+variable "log_group" {
+  description = "CloudWatch Log Group for ECS Scheduled Task. Default: 'ecs/app/<name>'"
   type        = string
+  default     = ""
 }
 
 variable "region" {

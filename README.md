@@ -43,7 +43,6 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_cloudwatch_log_group"></a> [cloudwatch\_log\_group](#input\_cloudwatch\_log\_group) | CloudWatch Log Group for ECS Scheduled Task. If not defined, name is used instead. | `string` | n/a | yes |
 | <a name="input_cluster_arn"></a> [cluster\_arn](#input\_cluster\_arn) | Default ECS cluster ARN.  If not defined then cluster named `default' will be used.` | `string` | `""` | no |
 | <a name="input_command"></a> [command](#input\_command) | Override default container command. | `string` | `""` | no |
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | Fargate CPU time allocation | `number` | `256` | no |
@@ -51,6 +50,7 @@ No modules.
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment variables to pass to container at launch. | `map` | `{}` | no |
 | <a name="input_exec_role_arn"></a> [exec\_role\_arn](#input\_exec\_role\_arn) | Role to pull the container and push logs to CW. This is required for the FARGATE launch type, optional for EC2 | `string` | `""` | no |
 | <a name="input_image"></a> [image](#input\_image) | Container image to pull | `string` | n/a | yes |
+| <a name="input_log_group"></a> [log\_group](#input\_log\_group) | CloudWatch Log Group for ECS Scheduled Task. Default: 'ecs/app/<name>' | `string` | `""` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | Fargate Memory size allication | `number` | `512` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name value to use for task related objects | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | n/a | `string` | `"us-east-1"` | no |
