@@ -133,8 +133,8 @@ resource "aws_ecs_task_definition" "task" {
       options = {
         awslogs-create-group  = "true"
         awslogs-region        = local.region
-        awslogs-group         = var.name
-        awslogs-stream-prefix = "ecs/app"
+        awslogs-group         = "ecs/app"
+        awslogs-stream-prefix = var.name
       }
     }
   }])
