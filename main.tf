@@ -131,9 +131,10 @@ resource "aws_ecs_task_definition" "task" {
     logConfiguration = {
       logDriver = "awslogs"
       options = {
-        awslogs-create-group = "true"
-        awslogs-region       = local.region
-        awslogs-group        = var.name
+        awslogs-create-group  = "true"
+        awslogs-region        = local.region
+        awslogs-group         = var.name
+        awslogs-stream-prefix = "ecs/app"
       }
     }
   }])
