@@ -125,7 +125,7 @@ resource "aws_ecs_task_definition" "task" {
     name        = var.name
     image       = var.image
     essential   = true
-    command     = split(" ", var.command)
+    command     = var.command != "" ? split(" ", var.command) : null
     environment = local.environ
     secrets     = local.secrets
     logConfiguration = {
