@@ -111,17 +111,15 @@ locals {
       valueFrom = substr(var.secrets[key], 0, 8) == "arn:aws:" ? var.secrets[key] : substr(var.secrets[key], 0, 4) == "key/" ? "arn:aws:kms:${local.region}:${data.aws_caller_identity.current.account_id}:${var.secrets[key]}" : substr(var.secrets[key], 0, 1) == "/" ? "arn:aws:ssm:${local.region}:${data.aws_caller_identity.current.account_id}:parameter/${replace(var.secrets[key], "/^[/]/", "")}" : "arn:aws:secretsmanager:${local.region}:${data.aws_caller_identity.current.account_id}:secret:${var.secrets[key]}"
     }
   ]
-}
-resource "aws_ecs_task_definition" "task" {
-  count                    = var.enable ? 1 : 0
-  family                   = var.name
-  execution_role_arn       = local.exec_role_arn
-  task_role_arn            = var.task_role_arn
-  requires_compatibilities = ["FARGATE"]
-  network_mode             = "awsvpc"
-  cpu                      = var.cpu
-  memory                   = var.memory
-  container_definitions = jsonencode([{
+
+  sidecars = [
+    for key in sort(keys(var.sidecars)) : {
+      name   = key
+      image  = var.sidecars[key]
+    }
+  ]
+
+  primary = [{
     name        = var.name
     image       = var.image
     essential   = true
@@ -137,5 +135,18 @@ resource "aws_ecs_task_definition" "task" {
         awslogs-stream-prefix = var.name
       }
     }
-  }])
+  }]
+
+  template = compact(concat(local.primary, local.sidecars))
+}
+resource "aws_ecs_task_definition" "task" {
+  count                    = var.enable ? 1 : 0
+  family                   = var.name
+  execution_role_arn       = local.exec_role_arn
+  task_role_arn            = var.task_role_arn
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = var.cpu
+  memory                   = var.memory
+  container_definitions    = jsonencode(local.template)
 }

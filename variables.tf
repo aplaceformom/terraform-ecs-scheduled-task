@@ -77,6 +77,12 @@ variable "secrets" {
   default     = {}
 }
 
+variable "sidecars" {
+  description = "Docker images to run as sidecars to the primary task."
+  type        = map
+  default     = {}
+}
+
 variable "name" {
   description = "Name value to use for task related objects"
   type        = string
