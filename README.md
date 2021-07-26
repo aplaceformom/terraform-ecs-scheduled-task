@@ -56,6 +56,7 @@ No modules.
 | <a name="input_region"></a> [region](#input\_region) | n/a | `string` | `"us-east-1"` | no |
 | <a name="input_schedule"></a> [schedule](#input\_schedule) | Cron or scheduled rule to use for the scheduled task | `string` | n/a | yes |
 | <a name="input_secrets"></a> [secrets](#input\_secrets) | Environment variables to set from the secrets store at launch. | `map` | `{}` | no |
+| <a name="input_sidecars"></a> [sidecars](#input\_sidecars) | Docker images to run as sidecars to the primary task. | `map` | `{}` | no |
 | <a name="input_subnets"></a> [subnets](#input\_subnets) | n/a | `list` | `[]` | no |
 | <a name="input_task_role_arn"></a> [task\_role\_arn](#input\_task\_role\_arn) | Role that provides the security context that the container actually runs in. | `string` | `""` | no |
 
